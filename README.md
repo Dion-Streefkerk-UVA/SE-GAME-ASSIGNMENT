@@ -194,7 +194,8 @@ Iedereen moet regelmatig pullen, kleine stabiele stukken committen, en duidelijk
 We gebruiken drie niveaus van branches:
 - `main`
   Alleen voor stabiele versies van het project.
-  Deze branch is protected en hier wordt niet direct op gecommit.
+  Deze branch is protected en hier wordt niet direct op gecommit of naartoe gepusht.
+  Wij werken alleen via een Pull Request van `dev` naar `main`.
 - `dev`
   De gezamenlijke ontwikkelbranch.
   Hier komen goed werkende features eerst samen.
@@ -208,6 +209,10 @@ We gebruiken drie niveaus van branches:
 
 ### Regel 1
 Niemand commit direct op `main`.
+
+### Regel 1b
+Niemand pusht direct naar `main`.
+`main` mag alleen aangepast worden via een Pull Request, en alleen na toestemming van Dion.
 
 ### Regel 2
 Niemand werkt direct op `dev` voor grote veranderingen.
@@ -257,7 +262,13 @@ Bijvoorbeeld:
 Dan gaat het proces zo:
 1. Controleer of `dev` goed werkt
 2. Maak een Pull Request van `dev` naar `main`
-3. Merge pas daarna naar `main`
+3. Dion controleert en merge pas daarna naar `main`
+
+### Wat teamleden naar Dion moeten sturen
+- hun GitHub username
+
+Dat is genoeg om ze als collaborator toe te voegen aan de repository.
+Iedereen zet daarna zelf zijn of haar SSH key op het eigen GitHub account.
 
 
 ### Handige branch-namen
