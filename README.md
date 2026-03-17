@@ -189,3 +189,94 @@ Voor deze opdracht is het slim om vaak kleine commits te maken in het Nederlands
 - `readme verbeterd voor opdracht`
 
 Iedereen moet regelmatig pullen, kleine stabiele stukken committen, en duidelijke commit-berichten gebruiken zodat de werkverdeling in Git goed zichtbaar blijft.
+
+## Exact Branch-Werkproces Voor Ons Team
+We gebruiken drie niveaus van branches:
+- `main`
+  Alleen voor stabiele versies van het project.
+  Deze branch is protected en hier wordt niet direct op gecommit.
+- `dev`
+  De gezamenlijke ontwikkelbranch.
+  Hier komen goed werkende features eerst samen.
+- `feature/...`
+  Een eigen branch per taak of per teamlid.
+  Voorbeelden:
+  - `feature/startmenu`
+  - `feature/highscore`
+  - `feature/particles`
+  - `feature/extra-pickups`
+
+### Regel 1
+Niemand commit direct op `main`.
+
+### Regel 2
+Niemand werkt direct op `dev` voor grote veranderingen.
+Iedereen maakt eerst een eigen feature branch vanaf `dev`.
+
+### Stap voor stap per teamlid
+1. Haal eerst de nieuwste versie op:
+```bash
+git checkout dev
+git pull origin dev
+```
+
+2. Maak daarna je eigen feature branch:
+```bash
+git checkout -b feature/jouw-feature
+```
+
+3. Werk aan je code in kleine stappen en commit vaak:
+```bash
+git add .
+git commit -m "highscore basis toegevoegd"
+```
+
+4. Push je branch naar GitHub:
+```bash
+git push -u origin feature/jouw-feature
+```
+
+5. Maak op GitHub een Pull Request:
+- van `feature/jouw-feature`
+- naar `dev`
+
+6. Pas na controle of als de code goed werkt, wordt die branch gemerged in `dev`.
+
+### Wat gebeurt er met `dev`?
+- `dev` bevat alle nieuwste werkende features
+- als iets nog kapot of half af is, hoort het nog niet naar `dev`
+- alleen stabiele feature branches worden gemerged naar `dev`
+
+### Wanneer mergen we `dev` naar `main`?
+Dat doen we alleen wanneer `dev` op dat moment stabiel is.
+Bijvoorbeeld:
+- na een werkende demo
+- na een groepstest
+- voor een inlevermoment
+
+Dan gaat het proces zo:
+1. Controleer of `dev` goed werkt
+2. Maak een Pull Request van `dev` naar `main`
+3. Merge pas daarna naar `main`
+
+### Wat moet elk teamlid naar Dion sturen?
+- hun GitHub username
+
+Dat is genoeg om iemand als collaborator toe te voegen.
+Iedereen zet daarna zelf zijn of haar SSH key op het eigen GitHub account.
+
+### Handige branch-namen
+- `feature/startmenu`
+- `feature/highscore`
+- `feature/particles`
+- `feature/sounds`
+- `feature/obstacles`
+- `feature/multiplayer`
+
+### Belangrijke afspraken
+- pull altijd eerst de nieuwste `dev`
+- commit kleine werkende stukjes
+- gebruik duidelijke commit messages in het Nederlands
+- maak een Pull Request naar `dev`
+- merge nooit zomaar direct naar `main`
+- als je vastloopt: vraag eerst in de groep voordat je grote bestanden herschrijft
