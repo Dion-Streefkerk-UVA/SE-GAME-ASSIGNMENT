@@ -252,6 +252,15 @@ git push -u origin feature/jouw-feature
 - als iets nog kapot of half af is, hoort het nog niet naar `dev`
 - alleen stabiele feature branches worden gemerged naar `dev`
 
+### Hoe mergen naar `dev` werkt in GitHub
+- je pusht eerst je eigen `feature/...` branch naar GitHub
+- daarna maak je een Pull Request van `feature/...` naar `dev`
+- er wordt niet direct naar `dev` gepusht
+- `dev` is bedoeld als merge-only branch via GitHub Pull Requests
+- een feature wordt pas naar `dev` gemerged na toestemming van de afgesproken reviewers
+- werk dus altijd via:
+  `feature/... -> Pull Request -> dev`
+
 ### Wanneer mergen we `dev` naar `main`?
 Dat doen we alleen wanneer `dev` op dat moment stabiel is.
 Bijvoorbeeld:
@@ -263,6 +272,14 @@ Dan gaat het proces zo:
 1. Controleer of `dev` goed werkt
 2. Maak een Pull Request van `dev` naar `main`
 3. Dion controleert en merge pas daarna naar `main`
+
+### Hoe mergen naar `main` werkt in GitHub
+- er wordt niet direct naar `main` gepusht
+- `main` is een protected branch
+- alleen via een Pull Request van `dev` naar `main` mag `main` aangepast worden
+- Dion beslist wanneer die Pull Request wordt gemerged
+- werk dus altijd via:
+  `dev -> Pull Request -> main`
 
 ### Wat teamleden naar Dion moeten sturen
 - hun GitHub username
