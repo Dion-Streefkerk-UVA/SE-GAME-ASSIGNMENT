@@ -259,11 +259,6 @@ Dan gaat het proces zo:
 2. Maak een Pull Request van `dev` naar `main`
 3. Merge pas daarna naar `main`
 
-### Wat moet elk teamlid naar Dion sturen?
-- hun GitHub username
-
-Dat is genoeg om iemand als collaborator toe te voegen.
-Iedereen zet daarna zelf zijn of haar SSH key op het eigen GitHub account.
 
 ### Handige branch-namen
 - `feature/startmenu`
