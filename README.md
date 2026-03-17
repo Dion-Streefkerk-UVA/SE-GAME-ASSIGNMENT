@@ -6,9 +6,10 @@ Een groepsproject voor Software Engineering waarin we met Python en Pygame een e
 We maken een Snake-achtige game waarin de speler over een grid beweegt en verschillende pickups kan verzamelen. Het project is bewust simpel en modulair opgezet, zodat eerstejaars studenten de code goed kunnen begrijpen en uitbreiden.
 
 ## Team
-- Dion
-- Member 2
-- Member 3
+- Bob Engel
+- Dion Streefkerk
+- Dirrik Maitland
+- Samnang van Steen
 
 ## Opdrachtkoppeling
 Deze game is gemaakt voor de week 6 / week 7 opdracht:
@@ -37,8 +38,75 @@ SE-GAME-ASSIGNMENT/
 |   +-- snake.py
 |   +-- pickups.py
 |   +-- ui.py
+|   +-- team_features.py
 +-- assets/
 ```
+
+## Repo Architecture Guide
+Deze repository is bewust simpel opgezet zodat iedereen in het team snel kan zien waar code hoort.
+
+### Root van de repository
+- `README.md`
+  De hoofdhandleiding van het project. Hierin staan de speluitleg, installatie, besturing en afspraken voor het team.
+- `requirements.txt`
+  Bevat de Python-packages die nodig zijn om het project te draaien.
+- `.gitignore`
+  Zorgt dat tijdelijke bestanden zoals `.venv` en `__pycache__` niet in Git terechtkomen.
+- `main.py`
+  Het startpunt van het spel. Dit bestand maakt een `Game` object en start de game-loop.
+
+### De map `game/`
+In deze map staat alle logica van het spel. Elk bestand heeft een duidelijke verantwoordelijkheid.
+
+- `game/__init__.py`
+  Maakt van `game/` een Python package.
+- `game/settings.py`
+  Bevat alle vaste instellingen, zoals schermgrootte, kleuren, grid-grootte en snelheid.
+- `game/game.py`
+  De centrale controller van het spel.
+  Dit bestand regelt:
+  - de hoofdloop
+  - keyboard input
+  - reset en game over
+  - score en snelheid
+  - obstakels
+  - het aanroepen van andere onderdelen
+- `game/snake.py`
+  Bevat de `Snake` class.
+  Dit bestand regelt:
+  - de positie van de slang
+  - richting veranderen
+  - bewegen over het grid
+  - groeien
+  - botsing met zichzelf
+  - het tekenen van de slang
+- `game/pickups.py`
+  Bevat de pickup-hiërarchie.
+  Dit bestand laat polymorfisme zien via:
+  - `Pickup` als basisklasse
+  - `FoodPickup`
+  - `BonusPickup`
+  - `SpeedPickup`
+  - `SlowPickup`
+  - `HealPickup`
+- `game/ui.py`
+  Bevat losse functies voor het tekenen van tekst en overlays.
+  Daardoor blijft `game.py` overzichtelijker.
+- `game/team_features.py`
+  Bevat lege uitbreidpunten voor teamleden.
+  Hier kunnen teamgenoten nieuwe features bouwen zonder direct de hele basisstructuur te hoeven aanpassen.
+
+### De map `assets/`
+- `assets/`
+  Bedoeld voor afbeeldingen, geluiden, achtergronden of andere bestanden die later aan het spel worden toegevoegd.
+
+### Hoe de onderdelen samenwerken
+1. `main.py` start de game.
+2. `game/game.py` maakt alle belangrijke objecten aan.
+3. `game/snake.py` regelt de slang.
+4. `game/pickups.py` regelt pickups en hun effecten.
+5. `game/ui.py` helpt bij het tekenen van tekst en schermlagen.
+6. `game/team_features.py` geeft ruimte voor toekomstige uitbreidingen door teamleden.
 
 ## Installeren en starten
 ```bash
