@@ -281,12 +281,6 @@ Dan gaat het proces zo:
 - werk dus altijd via:
   `dev -> Pull Request -> main`
 
-### Wat teamleden naar Dion moeten sturen
-- hun GitHub username
-
-Dat is genoeg om ze als collaborator toe te voegen aan de repository.
-Iedereen zet daarna zelf zijn of haar SSH key op het eigen GitHub account.
-
 
 ### Handige branch-namen
 - `feature/startmenu`
