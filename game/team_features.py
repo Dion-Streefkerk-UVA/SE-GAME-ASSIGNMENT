@@ -15,16 +15,50 @@ class TeamFeature:
 
 
 class StartMenuFeature(TeamFeature):
-    """Placeholder voor een startmenu."""
+    """Startmenu voor het spel."""
 
     name = "startmenu"
 
+    # Menu states
+    STATE_MENU = "menu"
+    STATE_PLAYING = "playing"
+    STATE_PAUSED = "paused"
+
+    def __init__(self) -> None:
+        self.state = self.STATE_MENU
+        self.selected_option = 0  # 0=Start, 1=Quit
+        self.options = ["Start Game", "Quit"]
+        self.key_pressed_last_frame = set()
+
+    def is_in_menu(self) -> bool:
+        """Controleert of we in het menu scherm zijn."""
+        return self.state == self.STATE_MENU
+
+    def set_game_started(self) -> None:
+        """Zet de state naar 'spel aan het spelen'."""
+        self.state = self.STATE_PLAYING
+
+    def toggle_pause(self) -> None:
+        """Schakelt tussen pauzeren en spelen."""
+        if self.state == self.STATE_PLAYING:
+            self.state = self.STATE_PAUSED
+        elif self.state == self.STATE_PAUSED:
+            self.state = self.STATE_PLAYING
+
     def update(self, game) -> None:
-        # TODO: laat een teamlid hier een startscherm bouwen.
+        """Update menu input en state."""
+        if self.state != self.STATE_MENU:
+            return
+
+        # Voeg hier input handling toe
         pass
 
     def draw(self, screen, game) -> None:
-        # TODO: teken hier later knoppen of instructies.
+        """Tekent het menu op het scherm."""
+        if self.state != self.STATE_MENU:
+            return
+
+        # Voeg hier menu tekenen toe
         pass
 
 
