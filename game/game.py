@@ -152,6 +152,8 @@ class Game:
                 break
 
             if self.snake.get_head_position() in self.obstacles:
+                sound = pygame.mixer.Sound("assets/slang_botst.mp3")
+                sound.play()
                 self.game_over = True
                 self.last_pickup_text = "Je botste tegen een obstakel"
                 self.start_flash(FLASH_GAME_OVER_COLOR)
