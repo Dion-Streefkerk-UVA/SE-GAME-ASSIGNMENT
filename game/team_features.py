@@ -11,27 +11,21 @@ class TeamFeature:
     name = "onbekende feature"
 
     def update(self, game) -> None:
-        """Werk speldata bij voor deze feature."""
+        """Werk speldata bij voor deze feature (inclusief event handling)."""
         pass
 
     def draw(self, screen, game) -> None:
         """Teken extra onderdelen van deze feature."""
         pass
 
-    def handle_event(self, event, game) -> None:
-        """Handel events af voor deze feature."""
-        pass
-
 
 class StartMenuFeature(TeamFeature):
-    """Startmenu voor het spel."""
+    """Startmenu voor het spel"""
 
     name = "startmenu"
 
-    # Menu states
     STATE_MENU = "menu"
     STATE_PLAYING = "playing"
-    STATE_PAUSED = "paused"
 
     def __init__(self) -> None:
         self.state = self.STATE_MENU
@@ -46,39 +40,28 @@ class StartMenuFeature(TeamFeature):
         """Zet de state naar 'spel aan het spelen'."""
         self.state = self.STATE_PLAYING
 
-    def toggle_pause(self) -> None:
-        """Schakelt tussen pauzeren en spelen."""
-        if self.state == self.STATE_PLAYING:
-            self.state = self.STATE_PAUSED
-        elif self.state == self.STATE_PAUSED:
-            self.state = self.STATE_PLAYING
-
     def update(self, game) -> None:
-        """Update menu input en state."""
+        """Update menu state en verwerk toetsaanslagen."""
         if self.state != self.STATE_MENU:
             return
 
-        # (nog niets) - event handling gebeurt via handle_event()
-        pass
+        for event in game.events:
+            if event.type != pygame.KEYDOWN:
+                continue
 
-    def handle_event(self, event, game) -> None:
-        if self.state != self.STATE_MENU:
-            return
-
-        if event.type != pygame.KEYDOWN:
-            return
-
-        if event.key == pygame.K_UP:
-            self.selected_option = (self.selected_option - 1) % len(self.options)
-        elif event.key == pygame.K_DOWN:
-            self.selected_option = (self.selected_option + 1) % len(self.options)
-        elif event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
-            if self.selected_option == 0:
-                self.set_game_started()
-            elif self.selected_option == 1:
+            if event.key == pygame.K_UP:
+                self.selected_option = (self.selected_option - 1) % len(self.options)
+            elif event.key == pygame.K_DOWN:
+                self.selected_option = (self.selected_option + 1) % len(self.options)
+            elif event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
+                if self.selected_option == 0:
+                    self.set_game_started()
+                elif self.selected_option == 1:
+                    pass  # High Score (TODO: feature implementeren)
+                elif self.selected_option == 2:
+                    game.running = False  
+            elif event.key == pygame.K_ESCAPE:
                 game.running = False
-        elif event.key == pygame.K_ESCAPE:
-            game.running = False
 
     def draw(self, screen, game) -> None:
         """Tekent het menu op het scherm."""
@@ -95,7 +78,6 @@ class StartMenuFeature(TeamFeature):
             size=64,
         )
 
-        # Menu opties
         for idx, option in enumerate(self.options):
             text = option
             color = TEXT_COLOR
@@ -114,7 +96,7 @@ class StartMenuFeature(TeamFeature):
 
         draw_centered_text(
             screen,
-            "Gebruik ⬆️/⬇️ en Enter",
+            "Gebruik Pijl omhoog, Pijl omlaag en Enter",
             center_x,
             center_y + 120,
             color=(180, 180, 180),
@@ -124,7 +106,8 @@ class StartMenuFeature(TeamFeature):
 
 class HighScoreFeature(TeamFeature):
     """Placeholder voor highscores."""
-
+    #kan zodra geimplementeerd worden toegevoegd aan startmenu 
+    #Highscore optie doet nu nog niks
     name = "highscore"
 
     def __init__(self) -> None:

@@ -47,6 +47,7 @@ class Game:
         self.flash_color = FLASH_PICKUP_COLOR
         self.last_pickup_text = "Eet pickups voor punten"
         self.obstacles = []
+        self.events = []  
         self.start_menu = StartMenuFeature()
         self.team_features = [
             self.start_menu,
@@ -88,26 +89,22 @@ class Game:
         self.flash_color = color
 
     def handle_events(self) -> None:
-        for event in pygame.event.get():
+        self.events = pygame.event.get()  
+        
+        for event in self.events:
             if event.type == pygame.QUIT:
                 self.running = False
                 continue
-
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.running = False
                 continue
-
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                 self.reset()
                 continue
-
             if hasattr(self, "start_menu") and self.start_menu.is_in_menu():
-                self.start_menu.handle_event(event, self)
                 continue
-
             if self.game_over:
                 continue
-
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     self.snake.change_direction((0, -1))
