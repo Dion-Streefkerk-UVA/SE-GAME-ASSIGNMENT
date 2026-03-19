@@ -47,8 +47,10 @@ class Game:
         self.flash_color = FLASH_PICKUP_COLOR
         self.last_pickup_text = "Eet pickups voor punten"
         self.obstacles = []
+        self.events = []  
+        self.start_menu = StartMenuFeature()
         self.team_features = [
-            StartMenuFeature(),
+            self.start_menu,
             HighScoreFeature(),
             ParticleFeature(),
         ]
@@ -87,17 +89,24 @@ class Game:
         self.flash_color = color
 
     def handle_events(self) -> None:
-        for event in pygame.event.get():
+        self.events = pygame.event.get()  
+        
+        for event in self.events:
             if event.type == pygame.QUIT:
                 self.running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    self.running = False
-                elif event.key == pygame.K_r:
-                    self.reset()
-                elif self.game_over:
-                    continue
-                elif event.key == pygame.K_UP:
+                continue
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.running = False
+                continue
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                self.reset()
+                continue
+            if hasattr(self, "start_menu") and self.start_menu.is_in_menu():
+                continue
+            if self.game_over:
+                continue
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
                     self.snake.change_direction((0, -1))
                 elif event.key == pygame.K_DOWN:
                     self.snake.change_direction((0, 1))
@@ -111,6 +120,12 @@ class Game:
         return 1 / self.current_fps
 
     def update(self, delta_time: float) -> None:
+        
+        if hasattr(self, "start_menu") and self.start_menu.is_in_menu():
+            for feature in self.team_features:
+                feature.update(self)
+            return
+
         if self.game_over:
             for feature in self.team_features:
                 feature.update(self)
@@ -175,6 +190,13 @@ class Game:
     def draw(self) -> None:
         self.screen.fill(BACKGROUND_COLOR)
         self.draw_grid()
+
+        if hasattr(self, "start_menu") and self.start_menu.is_in_menu():
+            for feature in self.team_features:
+                feature.draw(self.screen, self)
+            pygame.display.flip()
+            return
+
         self.draw_obstacles()
         self.pickup.draw(self.screen, self.tick_count)
         self.snake.draw(self.screen)
