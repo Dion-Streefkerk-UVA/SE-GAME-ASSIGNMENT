@@ -54,6 +54,12 @@ class Snake:
         """Zorgt dat de slang bij de volgende beweging langer wordt."""
         self.should_grow = True
 
+    def shrink(self, amount: int = 2) -> None:
+        """Maakt de slang korter, maar niet kleiner dan lengte 3."""
+        minimum_length = 3
+        new_length = max(minimum_length, len(self.body) - amount)
+        self.body = self.body[:new_length]
+
     def get_head_position(self) -> tuple[int, int]:
         """Geeft de positie van het hoofd van de slang terug."""
         return self.body[0]

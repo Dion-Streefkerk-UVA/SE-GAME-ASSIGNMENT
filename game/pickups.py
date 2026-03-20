@@ -47,6 +47,7 @@ class Pickup:
             SpeedPickup,
             SlowPickup,
             HealPickup,
+            ShrinkPickup,
         ]
         pickup_class = random.choice(pickup_classes)
         position = _get_random_free_position(blocked_positions)
@@ -121,6 +122,19 @@ class HealPickup(Pickup):
         game.score += self.score_value
         game.spawn_pickup()
         game.last_pickup_text = "+4 groeiboost"
+
+
+class ShrinkPickup(Pickup):
+    """Maakt de slang korter, maar niet kleiner dan lengte 3."""
+
+    color = (180, 80, 220)
+    score_value = 2
+
+    def apply(self, snake, game) -> None:
+        snake.shrink(2)
+        game.score += self.score_value
+        game.spawn_pickup()
+        game.last_pickup_text = "Krimpen!"
 
 
 def _get_random_free_position(
