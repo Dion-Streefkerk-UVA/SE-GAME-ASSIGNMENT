@@ -10,9 +10,10 @@ from game.settings import (
     GRID_WIDTH,
     SNAKE_COLOR,
     SLOW_COLOR,
+    SPEED_BOOST_AMOUNT,
+    SPEED_BOOST_COLOR,
     SPEED_COLOR,
 )
-
 
 class Pickup:
     """Basisklasse voor alle pickups in het spel."""
@@ -47,6 +48,7 @@ class Pickup:
             SpeedPickup,
             SlowPickup,
             HealPickup,
+            SpeedBoostPickup,
             ShrinkPickup,
         ]
         pickup_class = random.choice(pickup_classes)
@@ -65,6 +67,9 @@ class FoodPickup(Pickup):
         game.score += self.score_value
         game.spawn_pickup()
         game.last_pickup_text = "+1 lengte"
+        
+        sound = pygame.mixer.Sound("assets/Sound_crunch.wav")
+        sound.play()
 
 
 class BonusPickup(Pickup):
@@ -123,6 +128,19 @@ class HealPickup(Pickup):
         game.spawn_pickup()
         game.last_pickup_text = "+4 groeiboost"
 
+class SpeedBoostPickup(Pickup):
+    """Maakt de slang tijdelijk sneller voor een paar seconden."""
+
+    color = SPEED_BOOST_COLOR
+    score_value = 2
+
+    def apply(self, snake, game) -> None:
+        """Activeert een tijdelijke snelheidsboost."""
+        snake.grow()
+        game.score += self.score_value
+        game.activate_speed_boost(SPEED_BOOST_AMOUNT)
+        game.spawn_pickup()
+        game.last_pickup_text = "Tijdelijke speed boost!"
 
 class ShrinkPickup(Pickup):
     """Maakt de slang korter, maar niet kleiner dan lengte 3."""
