@@ -64,6 +64,9 @@ class FoodPickup(Pickup):
         game.score += self.score_value
         game.spawn_pickup()
         game.last_pickup_text = "+1 lengte"
+        
+        sound = pygame.mixer.Sound("assets/Sound_crunch.wav")
+        sound.play()
 
 
 class BonusPickup(Pickup):
