@@ -29,8 +29,8 @@ class StartMenuFeature(TeamFeature):
 
     def __init__(self) -> None:
         self.state = self.STATE_MENU
-        self.selected_option = 0  # 0=Start, 1=High Score, 2=Quit
-        self.options = ["Start Game", "High Score", "Quit"]
+        self.selected_option = 0  # 0=Start, 1=Quit
+        self.options = ["Start Game", "Quit"]
 
     def is_in_menu(self) -> bool:
         """Controleert of we in het menu scherm zijn."""
@@ -57,8 +57,6 @@ class StartMenuFeature(TeamFeature):
                 if self.selected_option == 0:
                     self.set_game_started()
                 elif self.selected_option == 1:
-                    pass  # High Score (TODO: feature implementeren)
-                elif self.selected_option == 2:
                     game.running = False  
             elif event.key == pygame.K_ESCAPE:
                 game.running = False
