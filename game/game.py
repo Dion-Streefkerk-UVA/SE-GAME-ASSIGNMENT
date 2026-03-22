@@ -14,6 +14,7 @@ from game.settings import (
     MIN_FPS,
     OBSTACLE_COLOR,
     RENDER_FPS,
+    SPEED_BOOST_DURATION,
     START_FPS,
     TEXT_COLOR,
     WINDOW_HEIGHT,
@@ -46,6 +47,8 @@ class Game:
         self.flash_timer = 0
         self.flash_color = FLASH_PICKUP_COLOR
         self.last_pickup_text = "Eet pickups voor punten"
+        self.speed_boost_timer = 0.0
+        self.speed_before_boost = START_FPS
         self.obstacles = []
         self.events = []  
         self.start_menu = StartMenuFeature()
@@ -82,6 +85,13 @@ class Game:
         """Verhoogt of verlaagt de snelheid binnen veilige grenzen."""
         new_fps = self.current_fps + amount
         self.current_fps = max(MIN_FPS, min(MAX_FPS, new_fps))
+    
+    def activate_speed_boost(self, amount: int) -> None:
+        """Activeert een tijdelijke snelheidsboost van enkele seconden."""
+        if self.speed_boost_timer <= 0:
+            self.speed_before_boost = self.current_fps
+        self.current_fps = min(MAX_FPS, self.current_fps + amount)
+        self.speed_boost_timer = SPEED_BOOST_DURATION
 
     def start_flash(self, color: tuple[int, int, int]) -> None:
         """Start een korte kleurflits als feedback voor de speler."""
@@ -132,6 +142,12 @@ class Game:
             return
 
         self.move_timer += delta_time
+
+        if self.speed_boost_timer > 0:
+            self.speed_boost_timer -= delta_time
+            if self.speed_boost_timer <= 0:
+                self.current_fps = self.speed_before_boost
+                self.last_pickup_text = "Speed boost voorbij"
 
         if self.flash_timer > 0:
             self.flash_timer -= 1
