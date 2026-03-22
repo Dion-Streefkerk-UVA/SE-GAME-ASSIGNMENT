@@ -43,6 +43,7 @@ class Game:
         self.game_over = False
         self.tick_count = 0
         self.move_timer = 0.0
+        self.game_over_delay = 0.0
         self.flash_timer = 0
         self.flash_color = FLASH_PICKUP_COLOR
         self.last_pickup_text = "Eet pickups voor punten"
@@ -126,6 +127,10 @@ class Game:
                 feature.update(self)
             return
 
+        if self.game_over_delay > 0:
+            self.game_over_delay -= delta_time
+
+            
         if self.game_over:
             for feature in self.team_features:
                 feature.update(self)
@@ -154,11 +159,14 @@ class Game:
             if self.snake.get_head_position() in self.obstacles:
                 sound = pygame.mixer.Sound("assets/slang_botst.mp3")
                 sound.play()
-                self.game_over = True
+                self.game_over = True  # ← Game stopt NU
+                self.game_over_delay = sound.get_length()  # ← Maar overlay pas later
                 self.last_pickup_text = "Je botste tegen een obstakel"
                 self.start_flash(FLASH_GAME_OVER_COLOR)
                 break
-
+        
+        
+                
         for feature in self.team_features:
             feature.update(self)
 
@@ -210,7 +218,7 @@ class Game:
             feature.draw(self.screen, self)
         self.draw_flash()
 
-        if self.game_over:
+        if self.game_over and self.game_over_delay <= 0:
             draw_game_over_overlay(self.screen, WINDOW_WIDTH, WINDOW_HEIGHT)
             draw_centered_text(
                 self.screen,

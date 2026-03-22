@@ -37,4 +37,4 @@ def draw_game_over_overlay(screen: pygame.Surface, width: int, height: int) -> N
     overlay = pygame.Surface((width, height), pygame.SRCALPHA)
     overlay.fill((0, 0, 0, 170))
     screen.blit(overlay, (0, 0))
-    pygame.draw.rect(screen, GAME_OVER_COLOR, (140, 180, 520, 180), 3)
+    pygame.draw.rect(screen, GAME_OVER_COLOR, (145, 185, 525, 185), 3)

@@ -81,6 +81,9 @@ class BonusPickup(Pickup):
         game.spawn_pickup()
         game.last_pickup_text = "+3 bonuspunten"
 
+        sound = pygame.mixer.Sound("assets/Sound_crunch.wav")
+        sound.play()
+
 
 class SpeedPickup(Pickup):
     """Maakt het spel iets sneller."""
@@ -95,6 +98,9 @@ class SpeedPickup(Pickup):
         game.change_speed(self.fps_change)
         game.spawn_pickup()
         game.last_pickup_text = "Sneller!"
+
+        sound = pygame.mixer.Sound("assets/Sound_crunch.wav")
+        sound.play()
 
 
 class SlowPickup(Pickup):
@@ -111,6 +117,9 @@ class SlowPickup(Pickup):
         game.spawn_pickup()
         game.last_pickup_text = "Langzamer!"
 
+        sound = pygame.mixer.Sound("assets/Sound_crunch.wav")
+        sound.play()
+
 
 class HealPickup(Pickup):
     """Geeft extra groei en punten als veilige bonuspickup."""
@@ -124,6 +133,9 @@ class HealPickup(Pickup):
         game.score += self.score_value
         game.spawn_pickup()
         game.last_pickup_text = "+4 groeiboost"
+
+        sound = pygame.mixer.Sound("assets/Sound_crunch.wav")
+        sound.play()
 
 
 def _get_random_free_position(
